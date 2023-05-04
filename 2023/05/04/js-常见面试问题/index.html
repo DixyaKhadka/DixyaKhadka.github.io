@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.什么是重绘和重排重绘：当页面元素的样式改变不影响布局时，浏览器重新对元素进行更新的过程叫做重绘。重排：当页面元素的尺寸、结构、或某些属性发生改变时，浏览器重新渲染部分或全部文档的过程叫做重排也叫做回流。2.this理解箭头函数内不存在this，沿用上一级的，上一级没有继续往上找，直到找到有this的地方 this是函数调用的时候确定的。不是定义时候确定的对象的方法内部, 看方法被谁调用3.改变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js 常见面试问题">
+<meta property="og:url" content="http://example.com/2023/05/04/js-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="yibei&#39;s Blog">
+<meta property="og:description" content="1.什么是重绘和重排重绘：当页面元素的样式改变不影响布局时，浏览器重新对元素进行更新的过程叫做重绘。重排：当页面元素的尺寸、结构、或某些属性发生改变时，浏览器重新渲染部分或全部文档的过程叫做重排也叫做回流。2.this理解箭头函数内不存在this，沿用上一级的，上一级没有继续往上找，直到找到有this的地方 this是函数调用的时候确定的。不是定义时候确定的对象的方法内部, 看方法被谁调用3.改变">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-04T12:24:18.000Z">
+<meta property="article:modified_time" content="2023-05-04T12:25:01.492Z">
+<meta property="article:author" content="yibei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/05/04/js-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>js 常见面试问题 | yibei's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">yibei's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Code builds world !</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/04/js-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+      <meta itemprop="name" content="yibei">
+      <meta itemprop="description" content="欢迎来到我的世界💜">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yibei's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js 常见面试问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-05-04 20:24:18 / 修改时间：20:25:01" itemprop="dateCreated datePublished" datetime="2023-05-04T20:24:18+08:00">2023-05-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>1.什么是重绘和重排<br>重绘：当页面元素的样式改变不影响布局时，浏览器重新对元素<br>进行更新的过程叫做重绘。<br>重排：当页面元素的尺寸、结构、或某些属性发生改变时，浏览<br>器重新渲染部分或全部文档的过程叫做重排也叫做回流。<br>2.this理解<br>箭头函数内不存在this，沿用上一级的，上一级没有继续往上<br>找，直到找到有this的地方<br> this是函数调用的时候确定的。不是定义时候确定的<br>对象的方法内部, 看方法被谁调用<br>3.改变this有哪些方法-箭头函数特点<br>箭头函数<br>call（） apply（） bind（）<br>4.原型的理解<br>每一个构造函数都有一个 prototype 属性，指向另一个对象，所<br>以我们也称为原型对象<br>5.原型链的理解<br>_proto_对象原型的意义就在于为对象成员查找机制提供一个方<br>向，或者说一条路线<br>6.es6 新增哪些内容<br>let const<br>箭头函数<br>对象&#x2F;数组解构<br>ES6模块化开发<br>Set 和 map数据结构<br>Promise<br>扩展运算符<br>模板字符串<br>async、await<br>*7.let const 区别 *<br>let可以声明变量不赋值，const声明时必须赋值<br>let定义的变量可以修改，const声明的变量不可以修改<br>8.cookie 、本地存储、session的区别<br>1 存储大小不同<br> cookie： 4K<br>session : 5M<br> local：5M<br>2 数据有效期不同，<br>cookie可以设置， 设置过期时间， 也可以手动清空<br>session：仅在浏览器关闭前有效<br>local：永久有效，除非手动清除<br>3 作用域，<br>cookie在所有同源窗口共享<br>session仅在一个浏览器共享，不同浏览器不共享<br>local在所有同源窗口共享<br>4 通信，<br>cookie: 通过http,在浏览器和服务器传递<br>session仅在客户端<br>local仅在客户端<br>5 应用，<br>cookie判断用户是否登陆过，记忆密码自动登录<br>session敏感账号一次登录，关闭浏览器删除<br>local个人长期登录， 长期保存数据<br>9.堆和栈的理解<br>栈： 简单数据类型存放到栈里面，由操作系统自动分配释放存<br>放函数的参数值、局部变量的值等。<br>堆：存储复杂类型对象，一般由程序员分配释放，若程序员不释<br>放，由垃圾回收机制回收。<br>10.基础和复杂 的区别<br>存储上的区别<br>基本数据类型，直接存储在 栈 里<br>复杂数据类型，数据存储在 堆 里，把地址存储在 栈 里<br>11.深拷贝和浅拷贝的区别，怎么做一个深拷贝 和浅拷贝<br>浅拷贝是 遍历拷贝对象第一层属性名和属性值<br>深拷贝是遍历拷贝一个对象第一层属性名和属性值，如果发现属<br>性值是一个对象，则递归拷贝所有深层的属性<br>12.vue2底层 数据拦截 的用什么实现的？有什么缺点？ (或者叫响应式的原<br>理),vue3实现有什么不同<br>vue2<br>vue2 使用了defineproperty 监听对象属性的变化<br>缺点<br>不能监听通过下标给数组添加元素（调用splice修改或者<br>调用强制更新）<br>要定义的数据必须要提前在data中定义好<br>vue3<br>使用了es6新增的Proxy来监听对象属性的变化<br>优点<br>解决可以监听数组的方法，能通过下标修改数组<br>13.闭包的理解，什么是闭包<br>简单理解：闭包 &#x3D; 内层函数 + 外层函数的变量<br>闭包是一个 函数的执行空间,执行空间有一个局部变量被外部引<br>用，这个执行空间就是闭包<br>14.闭包使用场景<br>实现数据的私有<br>函数柯理化<br>15.闭包缺点<br>造成内存泄漏<br>16.作用域链<br>作用域链本质上是底层的变量查找机制<br>在函数被执行时，会优先查找当前函数作用域中查找变量<br>如果当前作用域查找不到则会依次逐级查找父级作用域直到全局<br>作用域<br>17.垃圾回收机制<br>JS中内存的分配和回收都是自动完成的，内存在不使用的时候会<br>被垃圾回收器自动回收<br>两种回收算法<br>引用计数法<br>标记清除法<br>18.防抖和节流<br>防抖:如果在 n 秒内又触发了事件，则会重新计算函数执行时间<br>节流: 就是指连续触发事件但是在 n 秒中只执行一次函数<br>19.应用场景<br>防抖使用场景： 搜索框输入，设定每次输入完毕n秒后发送请<br>求，如果期间还有输入，则从新计算时间<br>节流使用场景： : 鼠标移动，页面尺寸发生变化，滚动条滚动等<br>开销比较大的情况下<br>20.hash和history的区别<br>一般场景下，hash 和 history 都可以，除非你更在意颜<br>值，# 符号夹杂在 URL 里看起来确实有些不太美丽<br>底层实现不一样：（背过）<br>hash 路由使用 利用url 的hash值变化实现，<br>history路由使用 h5新增的 history.pushState API 实现<br>（需要服务器配合-如果服务器不配置，刷新就会404）<br>其他考虑<br>1.形式上：hash模式url里面永远带着#号，开发当中默<br>认使用这个模式。如果用户考虑url的规范那么就需要使<br>用history模式，因为history模式没有 ，是个正常的<br>url，适合推广宣传；<br>#号<br>2.功能上：比如我们在开发app的时候有分享页面，那<br>么这个分享出去的页面就是用vue或是react做的，咱们<br>把这个页面分享到第三方的app里，有的app里面url是<br>不允许带有 ，所以要将<br>，但是使用history模式还有一个问题就是，<br>在访问二级页面的时候，做刷新操作，会出现404错<br>误，那么就需要和后端人配合，让他配置一下apache或<br>是nginx的url重定向，重定向到你的首页路由上就ok了<br>#号的 #号去除那么就要使用<br>history模式<br>21.Promise<br>22.async和await<br>不能等失败，配合try-catch<br>23.跨域的解决方案<br>1.cors-跨域资源共享（跟前端没有关系）<br> 2-代理服务器<br> 3-代理插件（proxyServer）<br>前端的使用vue或者react开发的时候，项目也可以安装一个代<br>理插件<br>注意：只能是开发中使用，项目上线是用不了的<br> 4-websocket（socket 协议）<br>使用不是http协议，没有跨域问题，socket 协议<br>区别：<br>http协议是单向的，只能浏览器发送给服务器<br>socket 是双向的，例如：微信聊天<br> 5-jsonp<br>24.jsonp 常见的面试题<br>1.jsonp 原理<br>src 不受同源策略影响<br>script 标签会把请求的内容当作 js 代码来执行<br>2.jsonp 的返回值<br>字符串，函数名() 形式的字符串<br>一段可以执行的 js 代码宁符串<br>3.jsonp 的优缺点<br>优点<br>绕开了同源策略，实现跨城请求<br>方便，因为是以 script 标签外部资源的形式请求<br>缺点：不好做安全防范<br>25.ajax axios fetch 的区别<br>axios -基于promsie封装的ajax<br>fetch -新的网络请求api js中提供的最新的请求api，提供promise<br>的api（原生js中api）<br>Fetch 是一个 API，它是真实存在的，它是基于 promise 的。<br>ajax -底层 使用 XMLHttpRequest</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/03/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="yibei"
+      src="/images/touxiang.jpeg">
+  <p class="site-author-name" itemprop="name">yibei</p>
+  <div class="site-description" itemprop="description">欢迎来到我的世界💜</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yibei</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
