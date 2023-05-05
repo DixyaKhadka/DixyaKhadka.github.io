@@ -163,6 +163,68 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/05/%E4%BB%80%E4%B9%88%E6%98%AF%E6%9F%AF%E9%87%8C%E5%8C%96%E4%B8%8E%E5%8F%8D%E6%9F%AF%E9%87%8C%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+      <meta itemprop="name" content="yibei">
+      <meta itemprop="description" content="欢迎来到我的世界💜">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yibei's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/05/%E4%BB%80%E4%B9%88%E6%98%AF%E6%9F%AF%E9%87%8C%E5%8C%96%E4%B8%8E%E5%8F%8D%E6%9F%AF%E9%87%8C%E5%8C%96/" class="post-title-link" itemprop="url">什么是柯里化与反柯里化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-05-05 08:36:13 / 修改时间：08:41:14" itemprop="dateCreated datePublished" datetime="2023-05-05T08:36:13+08:00">2023-05-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>柯里化<br>柯里化（Currying）是一种处理多元函数的方法。它产生一系列连锁函数，其中每个函数固定部分参数，并返回一个新函数，用于传回其它剩余参数的功能。柯里化的概念在函数式编程(Functional Programming)中经常能看到，并且是很多高级编程语言拥有的特性，比如JavaScript和Scala<br>柯里化的应用有以下好处：<br>    参数复用<br>    提前返回<br>    延迟计算&#x2F;运行<br>    柯里化可以简化代码实现<br>在JavaScript中，可以通过函数的call和apply方法来实现柯里化。下面是一个简单的柯里化函数，用于将两个参数相加：<br>function curriedAdd(x) {<br>  return function(y) {<br>    return x + y;<br>  };<br>}</p>
+<p>const addFive &#x3D; curriedAdd(5);<br>console.log(addFive(3)); &#x2F;&#x2F; Output: 8<br>这个函数将两个参数相加，但是通过柯里化将第一个参数“5”作为一个固定参数，返回一个新函数，新函数会将第二个参数与“5”相加。这样可以在之后的代码中多次使用“5”这个参数，而不必每次都写入<br>柯里化的实现原理可以分为以下两个步骤：</p>
+<p>创建一个闭包，用于存储已经传入的参数。<br>返回一个新函数，用于传入剩余的参数，并执行原函数。<br>下面是一个通用的柯里化函数实现，可以用于任意元函数的柯里化：<br>function currying(fn) {<br>  return function curried() {<br>    var args &#x3D; [].slice.call(arguments),<br>        context &#x3D; this<br>    return args.length &gt;&#x3D; fn.length ?<br>        fn.apply(context, args) :<br>        function () {<br>            var rest &#x3D; [].slice.call(arguments)<br>            return curried.apply(context, args.concat(rest))<br>        }<br>  }<br>}<br>这个函数接收一个函数作为参数，返回一个新函数。新函数会接收任意数量的参数，并将这些参数保存到一个数组中。如果参数的数量大于或等于原函数的参数数量，那么就执行原函数并返回结果。否则，返回一个新函数，用于传入剩余的参数并且递归调用curried函数。</p>
+<p>在柯里化函数的实现中，可以通过fn.length属性获取到原函数的参数数量，从而实现一个通用的柯里化函数。但是对于参数数量不确定的函数，可以在柯里化转换的同时，指定目标参数长度，用于替代length的作用。下面是一个适配参数不固定的函数的currying函数实现：function currying(fn, len) {<br>    return function curried() {<br>        var args &#x3D; [].slice.call(arguments),<br>            context &#x3D; this<br>        var _len &#x3D; fn.length || len || 0<br>        return args.length &gt;&#x3D; _len ?<br>            fn.apply(context, args) :<br>            function () {<br>                var rest &#x3D; [].slice.call(arguments)<br>                return curried.apply(context, args.concat(rest))<br>            }<br>    }<br>}<br>这个函数接收两个参数，一个是需要柯里化的函数，另一个是指定的目标参数长度。在返回的新函数中，如果原函数的参数长度大于0，则使用原函数的参数长度；否则，使用指定的目标参数长度。这样就可以适配参数不固定的函数</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/04/js-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -443,7 +505,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
