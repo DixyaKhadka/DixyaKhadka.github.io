@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-05-05 08:36:13 / 修改时间：08:41:14" itemprop="dateCreated datePublished" datetime="2023-05-05T08:36:13+08:00">2023-05-05</time>
+              <time title="创建时间：2023-05-05 08:36:13 / 修改时间：08:43:11" itemprop="dateCreated datePublished" datetime="2023-05-05T08:36:13+08:00">2023-05-05</time>
             </span>
 
           
@@ -206,6 +206,7 @@
 <p>const addFive &#x3D; curriedAdd(5);<br>console.log(addFive(3)); &#x2F;&#x2F; Output: 8<br>这个函数将两个参数相加，但是通过柯里化将第一个参数“5”作为一个固定参数，返回一个新函数，新函数会将第二个参数与“5”相加。这样可以在之后的代码中多次使用“5”这个参数，而不必每次都写入<br>柯里化的实现原理可以分为以下两个步骤：</p>
 <p>创建一个闭包，用于存储已经传入的参数。<br>返回一个新函数，用于传入剩余的参数，并执行原函数。<br>下面是一个通用的柯里化函数实现，可以用于任意元函数的柯里化：<br>function currying(fn) {<br>  return function curried() {<br>    var args &#x3D; [].slice.call(arguments),<br>        context &#x3D; this<br>    return args.length &gt;&#x3D; fn.length ?<br>        fn.apply(context, args) :<br>        function () {<br>            var rest &#x3D; [].slice.call(arguments)<br>            return curried.apply(context, args.concat(rest))<br>        }<br>  }<br>}<br>这个函数接收一个函数作为参数，返回一个新函数。新函数会接收任意数量的参数，并将这些参数保存到一个数组中。如果参数的数量大于或等于原函数的参数数量，那么就执行原函数并返回结果。否则，返回一个新函数，用于传入剩余的参数并且递归调用curried函数。</p>
 <p>在柯里化函数的实现中，可以通过fn.length属性获取到原函数的参数数量，从而实现一个通用的柯里化函数。但是对于参数数量不确定的函数，可以在柯里化转换的同时，指定目标参数长度，用于替代length的作用。下面是一个适配参数不固定的函数的currying函数实现：function currying(fn, len) {<br>    return function curried() {<br>        var args &#x3D; [].slice.call(arguments),<br>            context &#x3D; this<br>        var _len &#x3D; fn.length || len || 0<br>        return args.length &gt;&#x3D; _len ?<br>            fn.apply(context, args) :<br>            function () {<br>                var rest &#x3D; [].slice.call(arguments)<br>                return curried.apply(context, args.concat(rest))<br>            }<br>    }<br>}<br>这个函数接收两个参数，一个是需要柯里化的函数，另一个是指定的目标参数长度。在返回的新函数中，如果原函数的参数长度大于0，则使用原函数的参数长度；否则，使用指定的目标参数长度。这样就可以适配参数不固定的函数</p>
+<p>  什么是反柯里化：<br>  在JavaScript中，当我们调用对象的某个方法时，其实不用去关心该对象原本是否被设计为拥有这个方法，这是动态类型语言的特点。可以通过反柯里化(uncurrying)函数实现，让一个对象去借用一个原本不属于他的方法。</p>
 
       
     </div>
